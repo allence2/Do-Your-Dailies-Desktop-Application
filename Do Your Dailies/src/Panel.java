@@ -3,6 +3,10 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+/**
+ * Panel that will be added to the frame, that will contain the main information
+ * and data input by the user
+ */
 public class Panel extends JPanel {
 
     // SCREEN SETTINGS
