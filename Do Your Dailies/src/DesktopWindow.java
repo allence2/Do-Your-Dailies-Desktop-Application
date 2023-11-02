@@ -17,6 +17,7 @@ public class DesktopWindow extends JFrame {
         JMenuBar menu = new JMenuBar();
         setJMenuBar(menu);
         menu.add(createAddTaskMenuItem());
+        menu.add(createStatsMenuItem());
 
         Panel windowMainPanel = new Panel();
         add(windowMainPanel);
@@ -39,5 +40,22 @@ public class DesktopWindow extends JFrame {
         ActionListener listener = new AddTaskItemListener();
         item.addActionListener(listener);
         return item;
+    }
+
+    private JMenuItem createStatsMenuItem() {
+        /**
+         * Listener event for when the 'stats' menu button is
+         */
+        class AddStatsItemListener implements ActionListener {
+
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        }
+
+        JMenuItem statsItem = new JMenuItem("Stats");
+        ActionListener statsListener = new AddStatsItemListener();
+        statsItem.addActionListener(statsListener);
+        return statsItem;
     }
 }
