@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
@@ -13,10 +14,11 @@ public class Panel extends JPanel {
     private final int screenWidth = 700;
     private final int screenHeight = 600;
 
-    public Panel() {
+    public Panel(int gridHeight, int gridWidth) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);
         this.setDoubleBuffered(true);
+        this.setLayout(new GridLayout());
     }
 
     public int getScreenWidth() {

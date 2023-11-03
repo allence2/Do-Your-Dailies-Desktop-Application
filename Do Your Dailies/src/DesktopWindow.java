@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 public class DesktopWindow extends JFrame {
 
@@ -21,8 +22,12 @@ public class DesktopWindow extends JFrame {
         menu.add(createStatsMenuItem());
         menu.add(createSettingsMenuItem());
 
-        Panel windowMainPanel = new Panel();
+        Panel windowMainPanel = new Panel(9, 9);
         add(windowMainPanel);
+
+        JPanel windowTaskSection = new JPanel();
+        TasksView tasks = new TasksView();
+        windowTaskSection.add(tasks);
 
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
@@ -34,7 +39,7 @@ public class DesktopWindow extends JFrame {
         class TaskItemListener implements ActionListener {
 
             public void actionPerformed(ActionEvent event) {
-
+                JFrame addTaskFrame = new AddTaskFrame();
             }
         }
 
