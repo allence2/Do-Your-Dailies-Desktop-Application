@@ -17,6 +17,7 @@ public class DesktopWindow extends JFrame {
         JMenuBar menu = new JMenuBar();
         setJMenuBar(menu);
         menu.add(createAddTaskMenuItem());
+        menu.add(createManageTasksMenuItem());
         menu.add(createStatsMenuItem());
 
         Panel windowMainPanel = new Panel();
@@ -25,11 +26,28 @@ public class DesktopWindow extends JFrame {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
+    private JMenuItem createManageTasksMenuItem() {
+        /**
+         * Listener event for when the 'stats' menu button is
+         */
+        class ManageTasksListener implements ActionListener {
+
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        }
+
+        JMenuItem manageTasksItem = new JMenuItem("Manage Tasks");
+        ActionListener statsListener = new ManageTasksListener();
+        manageTasksItem.addActionListener(statsListener);
+        return manageTasksItem;
+    }
+
     private JMenuItem createAddTaskMenuItem() {
         /**
          * Listener event for when the 'Add Task' menu button is
          */
-        class AddTaskItemListener implements ActionListener {
+        class TaskItemListener implements ActionListener {
 
             public void actionPerformed(ActionEvent event) {
 
@@ -37,7 +55,7 @@ public class DesktopWindow extends JFrame {
         }
 
         JMenuItem item = new JMenuItem("Add Task");
-        ActionListener listener = new AddTaskItemListener();
+        ActionListener listener = new TaskItemListener();
         item.addActionListener(listener);
         return item;
     }
@@ -46,7 +64,7 @@ public class DesktopWindow extends JFrame {
         /**
          * Listener event for when the 'stats' menu button is
          */
-        class AddStatsItemListener implements ActionListener {
+        class StatsItemListener implements ActionListener {
 
             public void actionPerformed(ActionEvent event) {
 
@@ -54,7 +72,7 @@ public class DesktopWindow extends JFrame {
         }
 
         JMenuItem statsItem = new JMenuItem("Stats");
-        ActionListener statsListener = new AddStatsItemListener();
+        ActionListener statsListener = new StatsItemListener();
         statsItem.addActionListener(statsListener);
         return statsItem;
     }
