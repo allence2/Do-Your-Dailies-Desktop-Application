@@ -19,6 +19,7 @@ public class DesktopWindow extends JFrame {
         menu.add(createAddTaskMenuItem());
         menu.add(createManageTasksMenuItem());
         menu.add(createStatsMenuItem());
+        menu.add(createSettingsMenuItem());
 
         Panel windowMainPanel = new Panel();
         add(windowMainPanel);
@@ -26,9 +27,26 @@ public class DesktopWindow extends JFrame {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
+    private JMenuItem createAddTaskMenuItem() {
+        /**
+         * Listener event for when the 'Add Task' menu button is pressed
+         */
+        class TaskItemListener implements ActionListener {
+
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        }
+
+        JMenuItem addTaskItem = new JMenuItem("Add Task");
+        ActionListener AddTaskListener = new TaskItemListener();
+        addTaskItem.addActionListener(AddTaskListener);
+        return addTaskItem;
+    }
+
     private JMenuItem createManageTasksMenuItem() {
         /**
-         * Listener event for when the 'stats' menu button is
+         * Listener event for when the 'Manage Tasks' menu button is pressed
          */
         class ManageTasksListener implements ActionListener {
 
@@ -43,26 +61,9 @@ public class DesktopWindow extends JFrame {
         return manageTasksItem;
     }
 
-    private JMenuItem createAddTaskMenuItem() {
-        /**
-         * Listener event for when the 'Add Task' menu button is
-         */
-        class TaskItemListener implements ActionListener {
-
-            public void actionPerformed(ActionEvent event) {
-
-            }
-        }
-
-        JMenuItem item = new JMenuItem("Add Task");
-        ActionListener listener = new TaskItemListener();
-        item.addActionListener(listener);
-        return item;
-    }
-
     private JMenuItem createStatsMenuItem() {
         /**
-         * Listener event for when the 'stats' menu button is
+         * Listener event for when the 'stats' menu button is pressed
          */
         class StatsItemListener implements ActionListener {
 
@@ -75,5 +76,22 @@ public class DesktopWindow extends JFrame {
         ActionListener statsListener = new StatsItemListener();
         statsItem.addActionListener(statsListener);
         return statsItem;
+    }
+
+    private JMenuItem createSettingsMenuItem() {
+        /**
+         * Listener event for when the 'Settings' menu button is pressed
+         */
+        class SettingsItemListener implements ActionListener {
+
+            public void actionPerformed(ActionEvent event) {
+
+            }
+        }
+
+        JMenuItem settingsItem = new JMenuItem("Settings");
+        ActionListener settingsListener = new SettingsItemListener();
+        settingsItem.addActionListener(settingsListener);
+        return settingsItem;
     }
 }
