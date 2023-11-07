@@ -3,6 +3,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public class AddTaskFrame extends JFrame {
         inputArea = new JTextField("", 40);
 
         return inputArea;
+    }
+
+    public ArrayList<String> getTasks() {
+        return tasks;
     }
 
     public void printTasks() {

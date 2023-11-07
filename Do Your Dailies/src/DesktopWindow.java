@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -10,6 +11,7 @@ public class DesktopWindow extends JFrame {
 
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 500;
+    private boolean initialLoadFlag = true;
 
     public DesktopWindow() {
 
@@ -31,15 +33,28 @@ public class DesktopWindow extends JFrame {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 
+    /**
+     * Creates a menu button for 'Add Task' that will create a new window for the
+     * user to create a task to add to their daily todo list
+     * 
+     * @return JMenuItem of the 'Add Task' button
+     */
     private JMenuItem createAddTaskMenuItem() {
-        /**
-         * Listener event for when the 'Add Task' menu button is pressed
-         */
         class TaskItemListener implements ActionListener {
 
+            /**
+             * Method processed when the 'Add Task' menu button is pressed
+             */
             public void actionPerformed(ActionEvent event) {
                 AddTaskFrame addTaskFrame = new AddTaskFrame();
-                addTaskFrame.loadTasksFromFile();
+                /**
+                 * Doesn't load the external tasks file on initial call due to it not being
+                 * created
+                 */
+                if (!initialLoadFlag) {
+                    addTaskFrame.loadTasksFromFile();
+                }
+                initialLoadFlag = false;
                 // addTaskFrame.printTasks();
             }
         }
