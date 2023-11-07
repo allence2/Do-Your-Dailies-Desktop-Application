@@ -2,7 +2,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -39,7 +38,9 @@ public class DesktopWindow extends JFrame {
         class TaskItemListener implements ActionListener {
 
             public void actionPerformed(ActionEvent event) {
-                JFrame addTaskFrame = new AddTaskFrame();
+                AddTaskFrame addTaskFrame = new AddTaskFrame();
+                addTaskFrame.loadTasksFromFile();
+                // addTaskFrame.printTasks();
             }
         }
 
