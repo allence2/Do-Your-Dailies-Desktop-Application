@@ -1,14 +1,13 @@
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,22 +17,22 @@ import javax.swing.JTextField;
 public class AddTaskFrame extends JFrame {
 
     private JTextField inputArea;
-    private ArrayList<String> tasks = new ArrayList<String>();
+    private ArrayList<String> tasks;
     FileWriter outputFile;
     private String fileNameOutput = "D:\\Daily Tasks\\Task #" + java.time.LocalDate.now() + ".txt";
 
-    public AddTaskFrame() {
+    public AddTaskFrame(ArrayList<String> tasks) {
+        this.tasks = tasks;
+
+        // AddTaskFrame WINDOW SETTINGS
         this.setTitle("Add Task");
         this.setResizable(false);
-
-        this.setSize(700, 300);
+        this.setSize(400, 60);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints lableConstraints = new GridBagConstraints();
-        lableConstraints.anchor = GridBagConstraints.LINE_START;
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(createLabel());
         panel.add(createTextFieldInput());
         panel.add(createAddTaskConfirmButton());
@@ -42,13 +41,13 @@ public class AddTaskFrame extends JFrame {
     }
 
     private JLabel createLabel() {
-        JLabel label = new JLabel("Add Text: ");
+        JLabel label = new JLabel("Add Task: ");
         return label;
     }
 
     private JTextField createTextFieldInput() {
-        inputArea = new JTextField("", 40);
-
+        inputArea = new JTextField("", 50);
+        inputArea.setColumns(50);
         return inputArea;
     }
 
