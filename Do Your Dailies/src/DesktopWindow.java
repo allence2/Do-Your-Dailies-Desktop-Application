@@ -61,11 +61,15 @@ public class DesktopWindow extends JFrame {
              */
             public void actionPerformed(ActionEvent event) {
                 AddTaskFrame addTaskFrame = new AddTaskFrame(dailyTasksList);
+                dailyTasksList = addTaskFrame.getTasks();
+                for (int i = 0; i < dailyTasksList.size(); i++) {
+                    System.out.println(dailyTasksList.get(i));
+                }
                 /*
                  * Doesn't load the external tasks file on initial call due to it not being
                  * created
                  */
-                if (!initialLoadFlag) {
+                if (initialLoadFlag) {
                     addTaskFrame.loadTasksFromFile();
                 }
                 initialLoadFlag = false;
