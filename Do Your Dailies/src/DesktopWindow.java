@@ -47,9 +47,8 @@ public class DesktopWindow extends JFrame {
         Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
         windowMainPanel.updateTaskView(dailyTasksList);
 
-        JPanel windowTaskSection = new JPanel();
-        TasksView viewOfTasks = new TasksView(windowMainPanel, dailyTasksList);
-        windowMainPanel.add(viewOfTasks);
+        // TasksView viewOfTasks = new TasksView(windowMainPanel, dailyTasksList);
+        // windowMainPanel.add(viewOfTasks);
         add(windowMainPanel);
 
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
