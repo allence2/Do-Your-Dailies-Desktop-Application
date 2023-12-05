@@ -85,22 +85,4 @@ public class AddTaskFrame extends JFrame {
         confirmTaskButton.addActionListener(addTaskListner);
         return confirmTaskButton;
     }
-
-    public void loadTasksFromFile() {
-        try {
-            Scanner fileReader = new Scanner(new File(fileNameOutput));
-            while (fileReader.hasNextLine()) {
-                String line = fileReader.nextLine();
-                for (int i = 0; i < line.length(); i++) {
-                    if (line.charAt(i) == ':') {
-                        tasks.add(line.substring(i + 2, line.length()));
-                        i = line.length();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

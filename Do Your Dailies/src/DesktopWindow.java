@@ -1,8 +1,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -33,11 +36,13 @@ public class DesktopWindow extends JFrame {
         menu.add(createStatsMenuItem());
         menu.add(createSettingsMenuItem());
 
+        loadTasksFromFile();
+
         /*
          * Panel below the menu bar that houses the current task list, past history,
          * and quote section
          */
-        Panel windowMainPanel = new Panel(9, 9);
+        Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
         add(windowMainPanel);
 
         JPanel windowTaskSection = new JPanel();
@@ -62,18 +67,16 @@ public class DesktopWindow extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 AddTaskFrame addTaskFrame = new AddTaskFrame(dailyTasksList);
                 dailyTasksList = addTaskFrame.getTasks();
-                for (int i = 0; i < dailyTasksList.size(); i++) {
-                    System.out.println(dailyTasksList.get(i));
-                }
                 /*
                  * Doesn't load the external tasks file on initial call due to it not being
                  * created
+                 *
+                 * if (initialLoadFlag) {
+                 * addTaskFrame.loadTasksFromFile();
+                 * }
+                 * initialLoadFlag = false;
+                 * // addTaskFrame.printTasks();
                  */
-                if (initialLoadFlag) {
-                    addTaskFrame.loadTasksFromFile();
-                }
-                initialLoadFlag = false;
-                // addTaskFrame.printTasks();
             }
         }
 
@@ -132,5 +135,22 @@ public class DesktopWindow extends JFrame {
         ActionListener settingsListener = new SettingsItemListener();
         settingsItem.addActionListener(settingsListener);
         return settingsItem;
+    }
+
+    public void loadTasksFromFile() {
+        try {
+            Scanner fileReader = new Scanner(new File(fileNameOutput));
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                for (int i = 0; i < line.length(); i++) {
+                    if (line.charAt(i) == ':') {
+                        dailyTasksList.add(line.substring(i + 2, line.length()));
+                        i = line.length();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
