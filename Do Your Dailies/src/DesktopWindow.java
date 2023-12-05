@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class DesktopWindow extends JFrame {
 
@@ -43,11 +45,12 @@ public class DesktopWindow extends JFrame {
          * and quote section
          */
         Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
-        add(windowMainPanel);
+        windowMainPanel.updateTaskView(dailyTasksList);
 
         JPanel windowTaskSection = new JPanel();
-        TasksView viewOfTasks = new TasksView();
-        windowTaskSection.add(viewOfTasks);
+        TasksView viewOfTasks = new TasksView(windowMainPanel, dailyTasksList);
+        windowMainPanel.add(viewOfTasks);
+        add(windowMainPanel);
 
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
@@ -137,6 +140,9 @@ public class DesktopWindow extends JFrame {
         return settingsItem;
     }
 
+    /**
+     * Function that loads in tasks from the file today
+     */
     public void loadTasksFromFile() {
         try {
             Scanner fileReader = new Scanner(new File(fileNameOutput));
