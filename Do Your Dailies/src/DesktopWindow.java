@@ -19,7 +19,7 @@ public class DesktopWindow extends JFrame {
 
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 500;
-    private ArrayList<String> dailyTasksList = new ArrayList<String>();
+    private ArrayList<Task> dailyTasksList = new ArrayList<Task>();
     private FileWriter outputFile;
     private String fileNameOutput = "D:\\Daily Tasks\\Task #" + java.time.LocalDate.now() + ".txt";
     private JPanel taskSection;
@@ -60,8 +60,8 @@ public class DesktopWindow extends JFrame {
          * Panel below the menu bar that houses the current task list, past history,
          * and quote section
          */
-        Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
-        add(windowMainPanel);
+        // Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
+        // add(windowMainPanel);
 
         JPanel windowTaskSection = new JPanel();
         TasksView viewOfTasks = new TasksView();
@@ -165,7 +165,7 @@ public class DesktopWindow extends JFrame {
 
     private void updateTasks() {
         for (int i = 0; i < dailyTasksList.size(); i++) {
-            taskSection.add(new JCheckBox(dailyTasksList.get(i)));
+            taskSection.add(new JCheckBox(dailyTasksList.get(i).getDescription()));
         }
     }
 
@@ -176,7 +176,7 @@ public class DesktopWindow extends JFrame {
                 String line = fileReader.nextLine();
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == ':') {
-                        dailyTasksList.add(line.substring(i + 2, line.length()));
+                        dailyTasksList.add(new Task(line.substring(i + 2, line.length()), 0));
                         i = line.length();
                     }
                 }
