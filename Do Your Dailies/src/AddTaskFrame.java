@@ -17,11 +17,11 @@ import javax.swing.JTextField;
 public class AddTaskFrame extends JFrame {
 
     private JTextField inputArea;
-    private ArrayList<String> tasks;
+    private ArrayList<Task> tasks;
     FileWriter outputFile;
     private String fileNameOutput = "D:\\Daily Tasks\\Task #" + java.time.LocalDate.now() + ".txt";
 
-    public AddTaskFrame(ArrayList<String> tasks) {
+    public AddTaskFrame(ArrayList<Task> tasks) {
         this.tasks = tasks;
 
         // AddTaskFrame WINDOW SETTINGS
@@ -51,13 +51,13 @@ public class AddTaskFrame extends JFrame {
         return inputArea;
     }
 
-    public ArrayList<String> getTasks() {
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
 
     public void printTasks() {
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(tasks.get(i));
+            System.out.println(tasks.get(i).getDescription());
         }
     }
 
@@ -71,7 +71,7 @@ public class AddTaskFrame extends JFrame {
                     try {
                         outputFile = new FileWriter(new File(fileNameOutput), true);
                         String currentInputTask = inputArea.getText();
-                        tasks.add(currentInputTask);
+                        tasks.add(new Task(currentInputTask, 0));
                         outputFile.write("Task #" + tasks.size() + ": " + currentInputTask + "\n");
                         outputFile.close();
                     } catch (IOException e) {

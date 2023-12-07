@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -6,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.BoxLayout;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -18,10 +24,13 @@ public class DesktopWindow extends JFrame {
 
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 500;
-    private boolean initialLoadFlag = true;
-    private ArrayList<String> dailyTasksList = new ArrayList<String>();
-    FileWriter outputFile;
+    private ArrayList<Task> dailyTasksList = new ArrayList<Task>();
+    private FileWriter outputFile;
     private String fileNameOutput = "D:\\Daily Tasks\\Task #" + java.time.LocalDate.now() + ".txt";
+    private JPanel taskSection;
+    private JPanel historySection;
+    private JPanel quoteSection;
+    private ActionListener listener;
 
     /**
      * Default Constructor to add elements to create the GUI application
@@ -40,10 +49,38 @@ public class DesktopWindow extends JFrame {
 
         loadTasksFromFile();
 
+        listener = new taskListener();
+
+        // Main window panel
+        JPanel pane = new JPanel();
+        pane.setBackground(Color.DARK_GRAY);
+        pane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        pane.setLayout(new GridBagLayout());
+
+        GridBagConstraints comp = new GridBagConstraints();
+
+        // Panel on the left of the main window panel that contains a checklist of
+        // current tasks
+        taskSection = new JPanel();
+        taskSection.setLayout(new BoxLayout(taskSection, BoxLayout.PAGE_AXIS));
+        comp.fill = GridBagConstraints.VERTICAL;
+        comp.gridheight = 3;
+        comp.gridx = 0;
+        comp.gridy = 0;
+        pane.add(taskSection, comp);
+
         /*
          * Panel below the menu bar that houses the current task list, past history,
          * and quote section
          */
+
+        // Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
+        // add(windowMainPanel);
+
+        add(pane);
+
+        updateTasks();
+
         Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
         windowMainPanel.updateTaskView(dailyTasksList);
 
@@ -139,9 +176,25 @@ public class DesktopWindow extends JFrame {
         return settingsItem;
     }
 
+
+    class taskListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateTasks();
+        }
+
+    }
+
+    private void updateTasks() {
+        for (int i = 0; i < dailyTasksList.size(); i++) {
+            taskSection.add(new JCheckBox(dailyTasksList.get(i).getDescription()));
+        }
+    }
+
+
     /**
      * Function that loads in tasks from the file today
-     */
+    */
     public void loadTasksFromFile() {
         try {
             Scanner fileReader = new Scanner(new File(fileNameOutput));
@@ -149,7 +202,7 @@ public class DesktopWindow extends JFrame {
                 String line = fileReader.nextLine();
                 for (int i = 0; i < line.length(); i++) {
                     if (line.charAt(i) == ':') {
-                        dailyTasksList.add(line.substring(i + 2, line.length()));
+                        dailyTasksList.add(new Task(line.substring(i + 2, line.length()), 0));
                         i = line.length();
                     }
                 }
