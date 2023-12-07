@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.BoxLayout;
+
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class DesktopWindow extends JFrame {
 
@@ -71,6 +73,7 @@ public class DesktopWindow extends JFrame {
          * Panel below the menu bar that houses the current task list, past history,
          * and quote section
          */
+
         // Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
         // add(windowMainPanel);
 
@@ -78,9 +81,12 @@ public class DesktopWindow extends JFrame {
 
         updateTasks();
 
-        JPanel windowTaskSection = new JPanel();
-        TasksView viewOfTasks = new TasksView();
-        windowTaskSection.add(viewOfTasks);
+        Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
+        windowMainPanel.updateTaskView(dailyTasksList);
+
+        // TasksView viewOfTasks = new TasksView(windowMainPanel, dailyTasksList);
+        // windowMainPanel.add(viewOfTasks);
+        add(windowMainPanel);
 
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
@@ -170,6 +176,7 @@ public class DesktopWindow extends JFrame {
         return settingsItem;
     }
 
+
     class taskListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -184,6 +191,10 @@ public class DesktopWindow extends JFrame {
         }
     }
 
+
+    /**
+     * Function that loads in tasks from the file today
+    */
     public void loadTasksFromFile() {
         try {
             Scanner fileReader = new Scanner(new File(fileNameOutput));
