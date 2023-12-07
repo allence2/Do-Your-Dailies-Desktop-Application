@@ -1,4 +1,7 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -46,15 +49,23 @@ public class DesktopWindow extends JFrame {
 
         listener = new taskListener();
 
+        // Main window panel
+        JPanel pane = new JPanel();
+        pane.setBackground(Color.DARK_GRAY);
+        pane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        pane.setLayout(new GridBagLayout());
+
         GridBagConstraints comp = new GridBagConstraints();
 
+        // Panel on the left of the main window panel that contains a checklist of
+        // current tasks
         taskSection = new JPanel();
         taskSection.setLayout(new BoxLayout(taskSection, BoxLayout.PAGE_AXIS));
         comp.fill = GridBagConstraints.VERTICAL;
         comp.gridheight = 3;
         comp.gridx = 0;
         comp.gridy = 0;
-        this.add(taskSection, comp);
+        pane.add(taskSection, comp);
 
         /*
          * Panel below the menu bar that houses the current task list, past history,
@@ -62,6 +73,10 @@ public class DesktopWindow extends JFrame {
          */
         // Panel windowMainPanel = new Panel(9, 9, dailyTasksList);
         // add(windowMainPanel);
+
+        add(pane);
+
+        updateTasks();
 
         JPanel windowTaskSection = new JPanel();
         TasksView viewOfTasks = new TasksView();
