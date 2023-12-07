@@ -1,3 +1,4 @@
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,10 +19,13 @@ public class DesktopWindow extends JFrame {
 
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 500;
-    private boolean initialLoadFlag = true;
     private ArrayList<String> dailyTasksList = new ArrayList<String>();
-    FileWriter outputFile;
+    private FileWriter outputFile;
     private String fileNameOutput = "D:\\Daily Tasks\\Task #" + java.time.LocalDate.now() + ".txt";
+    private JPanel taskSection;
+    private JPanel historySection;
+    private JPanel quoteSection;
+    private ActionListener listener;
 
     /**
      * Default Constructor to add elements to create the GUI application
@@ -37,6 +43,18 @@ public class DesktopWindow extends JFrame {
         menu.add(createSettingsMenuItem());
 
         loadTasksFromFile();
+
+        listener = new taskListener();
+
+        GridBagConstraints comp = new GridBagConstraints();
+
+        taskSection = new JPanel();
+        taskSection.setLayout(new BoxLayout(taskSection, BoxLayout.PAGE_AXIS));
+        comp.fill = GridBagConstraints.VERTICAL;
+        comp.gridheight = 3;
+        comp.gridx = 0;
+        comp.gridy = 0;
+        this.add(taskSection, comp);
 
         /*
          * Panel below the menu bar that houses the current task list, past history,
@@ -135,6 +153,20 @@ public class DesktopWindow extends JFrame {
         ActionListener settingsListener = new SettingsItemListener();
         settingsItem.addActionListener(settingsListener);
         return settingsItem;
+    }
+
+    class taskListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateTasks();
+        }
+
+    }
+
+    private void updateTasks() {
+        for (int i = 0; i < dailyTasksList.size(); i++) {
+            taskSection.add(new JCheckBox(dailyTasksList.get(i)));
+        }
     }
 
     public void loadTasksFromFile() {
